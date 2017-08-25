@@ -16,6 +16,7 @@
 #define TPIPE 1 // tmux pipe pane to log
 #define MSIL 2  // konsole monitor for silence
 #define MACT 3  // konsole monitor for activity
+#define UBIS 4  // ubisoft shift-f2 (meh)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -24,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     MC_TAB,  KC_Q,    KC_W,    KC_E,                  KC_R,             KC_T,                  KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_LBRC, KC_RBRC, MC_BSLS, \
     KC_RCTL, KC_A,    KC_S,    KC_D,                  KC_F,             KC_G,                  KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_QUOT, KC_ENT,  \
     KC_LSFT, KC_Z,    KC_X,    KC_C,                  KC_V,             KC_B,                  KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, KC_UP,   \
-    KC_LCTL, KC_LGUI, KC_LALT, LT(LFN_LAYER, KC_SPC), OSL(OSHOT_LAYER), LT(RFN_LAYER, KC_SPC), KC_RALT, KC_RCTL, KC_LEFT, KC_RIGHT, KC_DOWN
+    KC_LCTL, KC_LGUI, KC_LALT, LT(LFN_LAYER, KC_ENT), OSL(OSHOT_LAYER), LT(RFN_LAYER, KC_SPC), KC_RALT, KC_RCTL, KC_LEFT, KC_RIGHT, KC_DOWN
   ),
 
   [LFN_LAYER] = KEYMAP( \
@@ -39,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,          KC_MPLY, KC_MPRV, KC_MNXT, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______,          KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_SINS, \
     MO(FN_SFT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, RESET,   \
-    _______,          _______, _______, KC_ENT,  _______, _______, _______, _______, _______, _______, _______ \
+    _______,          _______, _______, KC_DEL,  _______, _______, _______, _______, _______, _______, _______ \
   ),
   [FN_SFT_LAYER] = KEYMAP( \
     _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
@@ -49,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,          _______, _______,          _______, _______, _______,          _______, _______, _______, _______, _______ \
   ),
   [OSHOT_LAYER] = KEYMAP( \
-    _______, _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
+    _______, _______,  M(UBIS),  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______, M(MSIL),  M(MACT),  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______, M(TPIPE), M(TSYNC), _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
     _______, _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
@@ -102,6 +103,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         return MACRO(D(RCTL), D(LSFT), T(I), U(LSFT), U(RCTL), END);
       case MACT:
         return MACRO(D(RCTL), D(LSFT), T(A), U(LSFT), U(RCTL), END);
+      case UBIS:
+        return MACRO(D(LSFT), T(F2), U(LSFT), END);
     }
   }
   return MACRO_NONE;
