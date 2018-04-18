@@ -14,11 +14,13 @@
 
 #define TSYNC 0 // tmux synchronize panes
 #define TPIPE 1 // tmux pipe pane to log
-#define MSIL 2  // konsole monitor for silence
-#define MACT 3  // konsole monitor for activity
-#define UBIS 4  // ubisoft shift-f2 (meh)
-#define LCB 5    // <leader><C-b>
-#define LCX 6    // <leader><C-x>
+#define TPRV 2  // tmux previous session
+#define TNXT 3  // tmux next session
+#define MSIL 4  // konsole monitor for silence
+#define MACT 5  // konsole monitor for activity
+#define UBIS 6  // ubisoft shift-f2 (meh)
+#define LCB 7    // <leader><C-b>
+#define LCX 8    // <leader><C-x>
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -52,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,          _______, _______,          _______, _______, _______,          _______, _______, _______, _______, _______ \
   ),
   [OSHOT_LAYER] = KEYMAP( \
-    _______,          _______, M(UBIS), _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
+    _______,          _______, M(UBIS), _______, _______, _______, _______, _______, _______, M(TPRV), M(TNXT),  _______, _______, _______, \
     _______,          M(MSIL),  M(MACT), _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______,         M(TPIPE), M(TSYNC), _______, _______, _______, _______, M(LCB) , M(LCX) , _______, _______,  _______, _______, \
     _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
@@ -101,6 +103,10 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         return MACRO(D(RCTL), T(A), U(RCTL), D(RCTL), T(S), U(RCTL), END);
       case TPIPE:
         return MACRO(D(RCTL), T(A), U(RCTL), D(LSFT), T(P), U(LSFT), END);
+      case TPRV:
+        return MACRO(D(RCTL), T(A), U(RCTL), D(LSFT), T(9), U(LSFT), END);
+      case TNXT:
+        return MACRO(D(RCTL), T(A), U(RCTL), D(LSFT), T(0), U(LSFT), END);
       case MSIL:
         return MACRO(D(RCTL), D(LSFT), T(I), U(LSFT), U(RCTL), END);
       case MACT:
