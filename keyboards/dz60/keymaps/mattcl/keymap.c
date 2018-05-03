@@ -12,15 +12,20 @@
 #define MC_BSLS GUI_T(KC_BSLS)
 #define MC_SINS LSFT(KC_INS)
 
-#define TSYNC 0 // tmux synchronize panes
-#define TPIPE 1 // tmux pipe pane to log
-#define TPRV 2  // tmux previous session
-#define TNXT 3  // tmux next session
-#define MSIL 4  // konsole monitor for silence
-#define MACT 5  // konsole monitor for activity
-#define UBIS 6  // ubisoft shift-f2 (meh)
-#define LCB 7   // <leader><C-b>
-#define LCX 8   // <leader><C-x>
+#define TSYNC 0          // tmux synchronize panes
+#define TPIPE 1          // tmux pipe pane to log
+#define TPRV 2           // tmux previous session
+#define TNXT 3           // tmux next session
+#define MSIL 4           // konsole monitor for silence
+#define MACT 5           // konsole monitor for activity
+#define UBIS 6           // ubisoft shift-f2 (meh)
+#define LCB 7            // <leader><C-b>
+#define LCX 8            // <leader><C-x>
+#define GPMD_PREV 9      // google play music desktop prev
+#define GPMD_NEXT 10     // google play music desktop next
+#define GPMD_PAUSE 11    // google play music desktop play/pause
+#define GPMD_UP 12       // google play music desktop thumb up
+#define GPMD_DOWN 13     // google play music desktop thumb down
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -53,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,          _______, _______,          _______, _______, _______,          _______, _______, _______, _______, _______ \
   ),
   [OSHOT_LAYER] = LAYOUT( \
-    _______,                   _______, M(UBIS), _______, _______, _______, _______, _______, _______, M(TPRV), M(TNXT),  _______, _______, _______, _______, \
+    _______,                   M(GPMD_PAUSE), M(GPMD_PREV), M(GPMD_NEXT), _______, _______, _______, _______, _______, M(TPRV), M(TNXT),  M(GPMD_DOWN), M(GPMD_UP), _______, M(UBIS), \
     _______,          M(MSIL),  M(MACT), _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______,          M(TPIPE), M(TSYNC), _______, _______, _______, _______, M(LCB) , M(LCX) , _______, _______,  _______, _______, \
     _______, _______, _______, _______, _______, _______, RGB_TOG,  _______, _______, _______, _______, _______,  _______, _______, \
@@ -116,6 +121,16 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         return MACRO(T(COMM), D(RCTL), T(B), U(RCTL), END);
       case LCX:
         return MACRO(T(COMM), D(RCTL), T(X), U(RCTL), END);
+      case GPMD_PREV:
+        return MACRO(D(RCTL), D(LALT), D(LSFT), T(1), U(LSFT), U(LALT), U(RCTL), END);
+      case GPMD_NEXT:
+        return MACRO(D(RCTL), D(LALT), D(LSFT), T(2), U(LSFT), U(LALT), U(RCTL), END);
+      case GPMD_PAUSE:
+        return MACRO(D(RCTL), D(LALT), D(LSFT), T(3), U(LSFT), U(LALT), U(RCTL), END);
+      case GPMD_UP:
+        return MACRO(D(RCTL), D(LALT), D(LSFT), T(4), U(LSFT), U(LALT), U(RCTL), END);
+      case GPMD_DOWN:
+        return MACRO(D(RCTL), D(LALT), D(LSFT), T(5), U(LSFT), U(LALT), U(RCTL), END);
     }
   }
   return MACRO_NONE;
