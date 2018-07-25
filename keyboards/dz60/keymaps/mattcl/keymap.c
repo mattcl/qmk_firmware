@@ -3,10 +3,11 @@
 #define MODS_CTRL_MASK  (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
 
 #define BASE_LAYER 0
-#define LFN_LAYER 1
-#define RFN_LAYER 2
-#define FN_SFT_LAYER 3
-#define OSHOT_LAYER 4
+#define LSPC_LAYER 1
+#define LFN_LAYER 2
+#define RFN_LAYER 3
+#define FN_SFT_LAYER 4
+#define OSHOT_LAYER 5
 
 #define MC_TAB GUI_T(KC_TAB)
 #define MC_BSLS GUI_T(KC_BSLS)
@@ -28,13 +29,23 @@
 #define GPMD_DOWN 13     // google play music desktop thumb down
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-	LAYOUT(
+  // The left spacebar is tap for space, hold for fn
+	[BASE_LAYER] = LAYOUT( \
 		F(0),             KC_1,    KC_2,    KC_3,                  KC_4,             KC_5,                  KC_6,    KC_7,    KC_8,     KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_NO,   KC_BSPC,
 		MC_TAB,           KC_Q,    KC_W,    KC_E,                  KC_R,             KC_T,                  KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,    KC_LBRC, KC_RBRC, MC_BSLS,
 		KC_RCTL,          KC_A,    KC_S,    KC_D,                  KC_F,             KC_G,                  KC_H,    KC_J,    KC_K,     KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
 		KC_LSFT, KC_NO,   KC_Z,    KC_X,    KC_C,                  KC_V,             KC_B,                  KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, KC_UP,
-		KC_LCTL,          KC_LGUI, KC_LALT, LT(LFN_LAYER, KC_SPC), OSL(OSHOT_LAYER), LT(RFN_LAYER, KC_SPC), KC_RALT, KC_RCTL, KC_LEFT, KC_RIGHT, KC_DOWN),
+		KC_LCTL,          KC_LGUI, KC_LALT, LT(LFN_LAYER, KC_SPC), OSL(OSHOT_LAYER), KC_SPC, KC_RALT, KC_RCTL, KC_LEFT, KC_RIGHT, KC_DOWN \
+  ),
+
+  // The right spacebar is tap for space, hold for fn
+	[LSPC_LAYER] = LAYOUT( \
+		F(0),             KC_1,    KC_2,    KC_3,                  KC_4,             KC_5,                  KC_6,    KC_7,    KC_8,     KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_NO,   KC_BSPC,
+		MC_TAB,           KC_Q,    KC_W,    KC_E,                  KC_R,             KC_T,                  KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,    KC_LBRC, KC_RBRC, MC_BSLS,
+		KC_RCTL,          KC_A,    KC_S,    KC_D,                  KC_F,             KC_G,                  KC_H,    KC_J,    KC_K,     KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
+		KC_LSFT, KC_NO,   KC_Z,    KC_X,    KC_C,                  KC_V,             KC_B,                  KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, KC_UP,
+		KC_LCTL,          KC_LGUI, KC_LALT, KC_SPC, OSL(OSHOT_LAYER), LT(RFN_LAYER, KC_SPC), KC_RALT, KC_RCTL, KC_LEFT, KC_RIGHT, KC_DOWN \
+  ),
 
   [LFN_LAYER] = LAYOUT( \
     KC_GRV,                    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,  _______, KC_DEL,  \
@@ -47,22 +58,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,                    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,  _______, KC_DEL,  \
     _______,                   KC_MPLY, KC_MPRV, KC_MNXT, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_SINS, \
-    MO(FN_SFT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, RESET,   \
-    _______,                   _______, _______, KC_DEL,  _______, _______, _______, _______, _______, _______, _______ \
+    MO(FN_SFT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_PGUP, \
+    _______,                   _______, _______, KC_BSPC, _______, _______, _______, _______, KC_HOME, KC_END, KC_PGDN \
   ),
   [FN_SFT_LAYER] = LAYOUT( \
     _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
     _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
     _______,          _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______,          _______, _______,          _______, _______, _______,          _______, _______, _______, _______, _______ \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET, \
+    _______,                   _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______ \
   ),
   [OSHOT_LAYER] = LAYOUT( \
     _______,                   M(GPMD_PAUSE), M(GPMD_PREV), M(GPMD_NEXT), _______, _______, _______, _______, _______, M(TPRV), M(TNXT),  M(GPMD_DOWN), M(GPMD_UP), _______, M(UBIS), \
     _______,          M(MSIL),  M(MACT), _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______,          M(TPIPE), M(TSYNC), _______, _______, _______, _______, M(LCB) , M(LCX) , _______, _______,  _______, _______, \
     _______, _______, _______, _______, _______, _______, RGB_TOG,  _______, _______, _______, _______, _______,  _______, _______, \
-    _______,          _______, _______,          _______, _______, _______,          _______, _______, _______, _______, _______ \
+    _______,          _______, _______,          _______, _______, _______,          _______, _______, DF(BASE_LAYER), DF(LSPC_LAYER), _______ \
   ),
 };
 
