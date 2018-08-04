@@ -12,6 +12,7 @@
 #define MC_TAB GUI_T(KC_TAB)
 #define MC_BSLS GUI_T(KC_BSLS)
 #define MC_SINS LSFT(KC_INS)
+#define MC_MPST LGUI(KC_V)
 
 #define TSYNC 0          // tmux synchronize panes
 #define TPIPE 1          // tmux pipe pane to log
@@ -50,14 +51,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LFN_LAYER] = LAYOUT( \
     KC_GRV,                    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,  _______, KC_DEL,  \
     _______,                   KC_MPLY, KC_MPRV, KC_MNXT, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
-    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_SINS, \
+    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_MPST, \
     MO(FN_SFT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_PGUP, \
     _______,                   _______, _______, _______, _______, KC_BSPC, _______, _______, KC_HOME, KC_END, KC_PGDN \
   ),
   [RFN_LAYER] = LAYOUT( \
     KC_GRV,                    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,  _______, KC_DEL,  \
     _______,                   KC_MPLY, KC_MPRV, KC_MNXT, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
-    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_SINS, \
+    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_MPST, \
     MO(FN_SFT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_PGUP, \
     _______,                   _______, _______, KC_BSPC, _______, _______, _______, _______, KC_HOME, KC_END, KC_PGDN \
   ),
