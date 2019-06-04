@@ -28,6 +28,7 @@
 #define GPMD_PAUSE 11    // google play music desktop play/pause
 #define GPMD_UP 12       // google play music desktop thumb up
 #define GPMD_DOWN 13     // google play music desktop thumb down
+#define PASTE 14         // configurable paste
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // The left spacebar is tap for space, hold for fn
@@ -51,14 +52,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LFN_LAYER] = LAYOUT( \
     KC_GRV,                    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,  _______, KC_DEL,  \
     _______,                   KC_MPLY, KC_MPRV, KC_MNXT, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
-    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_SINS, \
+    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  M(PASTE), \
     MO(FN_SFT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_PGUP, \
     _______,                   _______, _______, _______, _______, KC_BSPC, _______, _______, KC_HOME, KC_END, KC_PGDN \
   ),
   [RFN_LAYER] = LAYOUT( \
     KC_GRV,                    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,  _______, KC_DEL,  \
     _______,                   KC_MPLY, KC_MPRV, KC_MNXT, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
-    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  MC_SINS, \
+    _______,                   KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,  KC_GRV,  M(PASTE), \
     MO(FN_SFT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_PGUP, \
     _______,                   _______, _______, KC_BSPC, _______, _______, _______, _______, KC_HOME, KC_END, KC_PGDN \
   ),
@@ -112,6 +113,8 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
   }
 }
 
+static bool osx_paste = false;
+
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   if (record->event.pressed) {
     switch(id) {
@@ -143,6 +146,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         return MACRO(D(RCTL), D(LALT), D(LSFT), T(4), U(LSFT), U(LALT), U(RCTL), END);
       case GPMD_DOWN:
         return MACRO(D(RCTL), D(LALT), D(LSFT), T(5), U(LSFT), U(LALT), U(RCTL), END);
+      case PASTE:
+        if (osx_paste) {
+          return MACRO(D(LGUI), T(V), U(LGUI), END);
+        } else {
+          return MACRO(D(LSFT), T(INS), U(LSFT), END);
+        }
     }
   }
   return MACRO_NONE;
