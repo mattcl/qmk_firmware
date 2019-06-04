@@ -29,6 +29,7 @@
 #define GPMD_UP 12       // google play music desktop thumb up
 #define GPMD_DOWN 13     // google play music desktop thumb down
 #define PASTE 14         // configurable paste
+#define TOGPST 15        // toggle paste keys
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // The left spacebar is tap for space, hold for fn
@@ -75,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,          M(MSIL),  M(MACT), _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
     _______,          M(TPIPE), M(TSYNC), _______, _______, _______, _______, M(LCB) , M(LCX) , _______, _______,  _______, _______, \
     _______, _______, _______, _______, _______, _______, RGB_TOG,  _______, BL_BRTG, BL_DEC,  BL_INC, BL_TOGG, _______, _______, \
-    _______,          _______, _______,          _______, _______, _______,          _______, _______, DF(BASE_LAYER), DF(LSPC_LAYER), _______ \
+    _______,          _______, _______,          _______, _______, _______,          _______, _______, DF(BASE_LAYER), DF(LSPC_LAYER), M(TOGPST) \
   ),
 };
 
@@ -152,6 +153,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         } else {
           return MACRO(D(LSFT), T(INS), U(LSFT), END);
         }
+      case TOGPST:
+        osx_paste = !osx_paste;
+        return MACRO_NONE;
     }
   }
   return MACRO_NONE;
