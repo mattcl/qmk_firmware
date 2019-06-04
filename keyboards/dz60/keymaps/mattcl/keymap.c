@@ -29,7 +29,9 @@
 #define GPMD_UP 12       // google play music desktop thumb up
 #define GPMD_DOWN 13     // google play music desktop thumb down
 #define PASTE 14         // configurable paste
-#define TOGPST 15        // toggle paste keys
+#define TOGOSX 15        // toggle paste keys
+
+static bool osx_mode = true;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // The left spacebar is tap for space, hold for fn
@@ -72,11 +74,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,                   _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______ \
   ),
   [OSHOT_LAYER] = LAYOUT( \
-    _______,                   M(GPMD_PAUSE), M(GPMD_PREV), M(GPMD_NEXT), _______, _______, _______, _______, _______, M(TPRV), M(TNXT),  M(GPMD_DOWN), M(GPMD_UP), _______, M(UBIS), \
-    _______,          M(MSIL),  M(MACT), _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
-    _______,          M(TPIPE), M(TSYNC), _______, _______, _______, _______, M(LCB) , M(LCX) , _______, _______,  _______, _______, \
-    _______, _______, _______, _______, _______, _______, RGB_TOG,  _______, BL_BRTG, BL_DEC,  BL_INC, BL_TOGG, _______, _______, \
-    _______,          _______, _______,          _______, _______, _______,          _______, _______, DF(BASE_LAYER), DF(LSPC_LAYER), M(TOGPST) \
+    _______, M(GPMD_PAUSE), M(GPMD_PREV), M(GPMD_NEXT), _______, _______, _______, _______, _______,        M(TPRV),        M(TNXT),    M(GPMD_DOWN), M(GPMD_UP), _______, M(UBIS), \
+    _______, M(MSIL),       M(MACT),      _______,      _______, _______, _______, _______, _______,        _______,        _______,    _______,      _______,    _______, \
+    _______, M(TPIPE),      M(TSYNC),     _______,      _______, _______, _______, M(LCB) , M(LCX) ,        _______,        _______,    _______,      _______,    \
+    _______, _______,       _______,      _______,      _______, _______, RGB_TOG, _______, BL_BRTG,        BL_DEC,         BL_INC,     BL_TOGG,      _______,    _______, \
+    _______, _______,       _______,      _______,      _______, _______, _______, _______, DF(BASE_LAYER), DF(LSPC_LAYER), M(TOGOSX) \
   ),
 };
 
@@ -114,8 +116,6 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
   }
 }
 
-static bool osx_paste = false;
-
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   if (record->event.pressed) {
     switch(id) {
@@ -148,13 +148,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
       case GPMD_DOWN:
         return MACRO(D(RCTL), D(LALT), D(LSFT), T(5), U(LSFT), U(LALT), U(RCTL), END);
       case PASTE:
-        if (osx_paste) {
+        if (osx_mode) {
           return MACRO(D(LGUI), T(V), U(LGUI), END);
         } else {
           return MACRO(D(LSFT), T(INS), U(LSFT), END);
         }
-      case TOGPST:
-        osx_paste = !osx_paste;
+      case TOGOSX:
+        osx_mode = !osx_mode;
         return MACRO_NONE;
     }
   }
