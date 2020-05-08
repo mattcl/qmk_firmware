@@ -10,20 +10,22 @@ extern keymap_config_t keymap_config;
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
-#define _QWERTY 0
+#define _QWERTY 1
 
 #define _UTIL 3
 #define _LOWER 4
 #define _RAISE 5
 #define _FUNCTION 15
 #define _ADJUST 16
+#define _OBS 17
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   UTIL,
   LOWER,
   RAISE,
-  ADJUST
+  ADJUST,
+  OBS,
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -57,6 +59,28 @@ enum custom_keycodes {
 // Defines for task manager and such
 #define CALTDEL LCTL(LALT(KC_DEL))
 #define TSKMGR LCTL(LSFT(KC_ESC))
+
+// OBS
+#define OBS_S1 MEH(KC_F1)
+#define OBS_S2 MEH(KC_F2)
+#define OBS_S3 MEH(KC_F3)
+#define OBS_S4 MEH(KC_F4)
+#define OBS_S5 MEH(KC_F5)
+#define OBS_S6 MEH(KC_F6)
+#define OBS_S7 MEH(KC_F7)
+#define OBS_S8 MEH(KC_F8)
+#define OBS_S9 MEH(KC_F9)
+#define OBS_CAM MEH(KC_F10)
+#define OBS_WTF MEH(KC_F11)
+
+#define OBS_SM MEH(KC_F12)
+#define OBS_QT MEH(KC_F13)
+#define OBS_QF MEH(KC_F14)
+
+#define OBS_REC MEH(KC_F15)
+#define OBS_PSE MEH(KC_F17)
+#define OBS_STR MEH(KC_F17)
+#define OBS_SHT MEH(KC_F18)
 
 static bool osx_mode = false;
 
@@ -146,11 +170,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_FUNCTION] = LAYOUT( \
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_UP,   _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, \
-  KC_CAPS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
-)
+),
+
+/* OBS
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |  REC |  S7  |  S8  |  S9  |Studio|Stream|
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |      |      |      |      |  PSE |  S4  |  S5  |  S6  |QuFade|ScrSht|
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |      |      |      |      |  CAM |  S1  |  S2  |  S3  |QuCut |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      | React|      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_OBS] = LAYOUT( \
+  _______, _______, _______, _______, _______, _______, OBS_REC, OBS_S7,  OBS_S8,  OBS_S9,  OBS_SM,  OBS_STR, \
+  _______, _______, _______, _______, _______, _______, OBS_PSE, OBS_S4,  OBS_S5,  OBS_S6,  OBS_QF,  OBS_SHT, \
+  _______, _______, _______, _______, _______, _______, OBS_CAM, OBS_S1,  OBS_S2,  OBS_S3,  OBS_QT,  _______, \
+  _______, _______, _______, _______, _______, _______, OBS_WTF, _______, _______, _______, _______, _______, \
+),
 
 };
 
