@@ -56,12 +56,12 @@ enum custom_keycodes {
 #define OBS_CAM MEH(KC_F10)
 #define OBS_WTF MEH(KC_F11)
 
-#define OBS_SM MEH(KC_F13)
+#define OBS_SM MEH(KC_F12)
 #define OBS_QT MEH(KC_F13)
 #define OBS_QF MEH(KC_F14)
 
 #define OBS_REC MEH(KC_F15)
-#define OBS_PSE MEH(KC_F17)
+#define OBS_PSE MEH(KC_F16)
 #define OBS_STR MEH(KC_F17)
 #define OBS_SHT MEH(KC_F18)
 
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      M(MSIL), M(MACT), KC_F12,  KC_F11,  KC_F10,  OBS_REC,                            RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, _______,M(TOGOSX),
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     M(TPIPE),M(TSYNC), KC_F9,   KC_F8,   KC_F7,  OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF  OBS_QT,  CALTDEL,
+     M(TPIPE),M(TSYNC), KC_F9,   KC_F8,   KC_F7,  OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF,  OBS_QT,  CALTDEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, _______,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                            OBS_WTF,  OBS_S1, OBS_S2,  OBS_S3,  OBS_S4,  _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
