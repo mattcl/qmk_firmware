@@ -41,6 +41,11 @@ enum layers {
 #define OBS_STR MEH(KC_F17)
 #define OBS_SHT MEH(KC_F18)
 
+#define OBS_U1 MEH(KC_F19)
+#define OBS_U2 MEH(KC_F20)
+#define OBS_U3 MEH(KC_F21)
+#define OBS_U4 MEH(KC_F22)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* OBS
@@ -49,16 +54,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |      |      |      |      |      |  PSE |  S4  |  S5  |  S6  |QuFade|ScrSht|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |  CAM |  S1  |  S2  |  S3  |QuCut |      |
+ * |      |      |      |      |      |      |  CAM |  S1  |  S2  |  S3  |QuCut |  U4  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      | React|      |      |      |      |      |
+ * |      |      |      |      |      |      | React|  U1  |  U2  |  U3  |  RGB |Lower |
  * `-----------------------------------------------------------------------------------'
  */
 [_OBS] = LAYOUT( \
-  _______, _______, _______, _______, _______, _______, OBS_REC, OBS_S7,  OBS_S8,  OBS_S9,  OBS_SM,  OBS_STR, \
-  _______, _______, _______, _______, _______, _______, OBS_PSE, OBS_S4,  OBS_S5,  OBS_S6,  OBS_QF,  OBS_SHT, \
-  _______, _______, _______, _______, _______, _______, OBS_CAM, OBS_S1,  OBS_S2,  OBS_S3,  OBS_QT,  _______, \
-  _______, _______, _______, _______, _______, _______, OBS_WTF, KC_1, _______, _______, RGB_TOG, LOWER   \
+  _______, _______, _______, _______, _______, _______, OBS_REC, OBS_S7, OBS_S8, OBS_S9, OBS_SM,  OBS_STR,  \
+  _______, _______, _______, _______, _______, _______, OBS_PSE, OBS_S4, OBS_S5, OBS_S6, OBS_QF,  OBS_SHT,  \
+  _______, _______, _______, _______, _______, _______, OBS_CAM, OBS_S1, OBS_S2, OBS_S3, OBS_QT,  OBS_U4,   \
+  _______, _______, _______, _______, _______, _______, M(0),    OBS_U1, OBS_U2, OBS_U3, RGB_TOG, LOWER   \
 ),
 
 [_LOWER] = LAYOUT( \
@@ -68,4 +73,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
 )
 
+};
+
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
+  switch(id) {
+    case 0: {
+      if (record->event.pressed) {
+        tap_code(OBS_WTF);
+      } else {
+        tap_code(OBS_WTF);
+      }
+      break;
+    }
+  }
+  return MACRO_NONE;
 };
