@@ -80,9 +80,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   switch(id) {
     case 0: {
       if (record->event.pressed) {
-        tap_code(OBS_WTF);
+        return MACRO(D(LCTL), D(LSFT), D(LALT), T(F11), U(LALT), U(LSFT), U(LCTL));
       } else {
-        tap_code(OBS_WTF);
+        return MACRO(D(LCTL), D(LSFT), D(LALT), T(F11), U(LALT), U(LSFT), U(LCTL));
       }
       break;
     }
