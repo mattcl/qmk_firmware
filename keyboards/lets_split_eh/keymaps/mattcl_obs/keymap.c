@@ -80,9 +80,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   switch(id) {
     case 0: {
       if (record->event.pressed) {
-        return MACRO(D(LCTL), D(LSFT), D(LALT), T(F11), U(LALT), U(LSFT), U(LCTL));
+        return MACRO(D(LCTL), D(LSFT), D(LALT), D(F11), W(100), U(F11), U(LALT), U(LSFT), U(LCTL), END);
       } else {
-        return MACRO(D(LCTL), D(LSFT), D(LALT), T(F11), U(LALT), U(LSFT), U(LCTL));
+        return MACRO(D(LCTL), D(LSFT), D(LALT), D(F11), W(100), U(F11), U(LALT), U(LSFT), U(LCTL), END);
       }
       break;
     }
