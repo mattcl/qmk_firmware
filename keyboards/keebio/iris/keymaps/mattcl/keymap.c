@@ -21,7 +21,7 @@ enum custom_keycodes {
 #define MC_MPST LGUI(KC_V)
 #define MC_LSPC LT(LFN_LAYER, KC_SPC)
 #define MC_RSPC LT(RFN_LAYER, KC_SPC)
-#define MC_NOG LCTL(KC_LALT)
+#define MC_NOG RALT(KC_LCTL)
 
 #define TSYNC 0          // tmux synchronize panes
 #define TPIPE 1          // tmux pipe pane to log
@@ -109,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______, _______, _______, _______, _______, KC_SLSH, _______,          _______, _______, OBS_S5,  OBS_S6,  OBS_S7,  OBS_S8,  _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                     MC_NOG, _______, KC_DEL,                    _______, _______, _______
+                                     _______, _______, KC_DEL,                    _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
