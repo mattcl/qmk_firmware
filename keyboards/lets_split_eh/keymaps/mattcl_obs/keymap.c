@@ -9,11 +9,13 @@ extern keymap_config_t keymap_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 enum layers {
-  _OBS,
-  _LOWER,
+  _OBS1,
+  _OBS2,
+  _MOD,
 };
 
-#define LOWER     MO(_LOWER)
+#define MOD     MO(_MOD)
+#define OBS1     MO(_LOWER)
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
@@ -45,10 +47,12 @@ enum layers {
 #define OBS_U2 MEH(KC_F20)
 #define OBS_U3 MEH(KC_F21)
 #define OBS_U4 MEH(KC_F22)
+#define OBS_U5 MEH(KC_F23)
+#define OBS_U6 MEH(KC_F24)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* OBS
+/* OBS 1
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |  REC |  S7  |  S8  |  S9  |Studio|Stream|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -59,14 +63,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      | React|  U1  |  U2  |  U3  |  RGB |Lower |
  * `-----------------------------------------------------------------------------------'
  */
-[_OBS] = LAYOUT( \
+[_OBS1] = LAYOUT( \
   _______, _______, _______, _______, _______, _______, OBS_REC, OBS_S7, OBS_S8, OBS_S9, OBS_SM,  OBS_STR,  \
   _______, _______, _______, _______, _______, _______, OBS_PSE, OBS_S4, OBS_S5, OBS_S6, OBS_QF,  OBS_SHT,  \
   _______, _______, _______, _______, _______, _______, OBS_CAM, OBS_S1, OBS_S2, OBS_S3, OBS_QT,  OBS_U4,   \
-  _______, _______, _______, _______, _______, _______, M(0),    OBS_U1, OBS_U2, OBS_U3, RGB_TOG, LOWER   \
+  _______, _______, _______, _______, _______, _______, M(0),    OBS_U1, OBS_U2, OBS_U3, RGB_TOG, MOD   \
 ),
 
-[_LOWER] = LAYOUT( \
+/* OBS 2
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |  REC |  S7  |  S8  |  S9  |Studio|Stream|
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |      |      |      |      |  PSE |  S4  |  S5  |  S6  |QuFade|ScrSht|
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |      |      |      |      |  CAM |  S1  |  S2  |  S3  |QuCut |  U4  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      | React|  U1  |  U2  |  U3  |  RGB |  MOD |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_OBS2] = LAYOUT( \
+  _______, _______, _______, _______, _______, _______, OBS_REC, OBS_S7, OBS_S8, OBS_S9, OBS_SM,  OBS_STR,  \
+  _______, _______, _______, _______, _______, _______, OBS_PSE, OBS_S4, OBS_S5, OBS_S6, OBS_QF,  OBS_SHT,  \
+  _______, _______, _______, _______, _______, _______, OBS_CAM, OBS_S1, OBS_S2, OBS_S3, OBS_QT,  OBS_U4,   \
+  _______, _______, _______, _______, _______, _______, M(0),    OBS_U1, OBS_U2, OBS_U3, RGB_TOG, MOD   \
+),
+
+[_MOD] = LAYOUT( \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
