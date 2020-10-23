@@ -44,6 +44,11 @@ enum custom_keycodes {
 #define CALTDEL LCTL(LALT(KC_DEL))
 #define TSKMGR LCTL(LSFT(KC_ESC))
 
+// Nog
+#define NOG_TOG LALT(LCTL(KC_W)) // toggle nog
+#define NOG_RT LALT(LCTL(KC_L))  // move right
+#define NOG_LT LALT(LCTL(KC_R))  // move left
+
 // OBS
 #define OBS_S1 MEH(KC_F1)
 #define OBS_S2 MEH(KC_F2)
@@ -119,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      M(TPIPE),M(TSYNC), KC_F9,   KC_F8,   KC_F7,  OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF,  OBS_QT,  CALTDEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                            OBS_WTF,  OBS_S1, OBS_S2,  OBS_S3,  OBS_S4,  _______,
+     _______, _______,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                            NOG_LT,  _______, _______,  NOG_RT, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______, _______,  KC_F3,   KC_F2,   KC_F1, MEH(KC_F1),LCA(KC_DEL),      RESET,  BL_BRTG,  BL_DEC, BL_INC,  BL_TOGG, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
