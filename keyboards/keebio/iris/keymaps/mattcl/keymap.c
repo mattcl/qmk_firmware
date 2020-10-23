@@ -47,7 +47,7 @@ enum custom_keycodes {
 // Nog
 #define NOG_TOG LALT(LCTL(KC_W)) // toggle nog
 #define NOG_RT LALT(LCTL(KC_L))  // move right
-#define NOG_LT LALT(LCTL(KC_R))  // move left
+#define NOG_LT LALT(LCTL(KC_H))  // move left
 
 // OBS
 #define OBS_S1 MEH(KC_F1)
