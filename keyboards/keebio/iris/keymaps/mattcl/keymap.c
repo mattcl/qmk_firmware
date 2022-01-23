@@ -34,11 +34,6 @@ enum custom_keycodes {
 #define UBIS 6           // ubisoft shift-f2 (meh)
 #define LCB 7            // <leader><C-b>
 #define LCX 8            // <leader><C-x>
-#define GPMD_PREV 9      // google play music desktop prev
-#define GPMD_NEXT 10     // google play music desktop next
-#define GPMD_PAUSE 11    // google play music desktop play/pause
-#define GPMD_UP 12       // google play music desktop thumb up
-#define GPMD_DOWN 13     // google play music desktop thumb down
 #define PASTE 14         // configurable paste
 #define TOGOSX 15        // toggle paste keys
 
@@ -80,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     F(0),    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
+     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -94,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY_SPACE_SWAP] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     F(0),    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
+     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -196,8 +191,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 uint32_t default_layer_state_set_user(uint32_t state) {
-  rgblight_sethsv(HSV_MAGENTA);
-  rgblight_mode(7);
+  // rev 4
+  // rgblight_sethsv(HSV_MAGENTA);
+  rgb_matrix_sethsv(HSV_PURPLE);
+  rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS);
   return state;
 }
 
@@ -205,22 +202,29 @@ uint32_t layer_state_set_user(uint32_t state) {
     uint8_t layer = biton32(state);
     switch(layer) {
     case _QWERTY:
-        rgblight_mode_noeeprom(7);
+        rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS);
+        // rgblight_mode_noeeprom(7);
         break;
     case _LOWER:
-        rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 5);
+        rgb_matrix_sethsv_noeeprom(HSV_BLUE);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_SPLASH);
+        // rgblight_mode_noeeprom(RGBLIGHT_EFFECT_RAINBOW_SWIRL + 5);
         break;
     case _RAISE:
-        rgblight_mode_noeeprom(RGBLIGHT_MODE_SNAKE + 3);
+        rgb_matrix_sethsv_noeeprom(HSV_GREEN);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_SPLASH);
+        // rgblight_mode_noeeprom(RGBLIGHT_EFFECT_SNAKE + 3);
         break;
     case _ADJUST:
-        rgblight_mode_noeeprom(22);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN);
+        // rgblight_mode_noeeprom(22);
         break;
     }
     return state;
 }
 
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (clockwise) {
             tap_code(KC_VOLU);
@@ -235,6 +239,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             tap_code(KC_PGDN);
         }
     }
+    return false;
 }
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
@@ -258,16 +263,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         return MACRO(T(COMM), D(RCTL), T(B), U(RCTL), END);
       case LCX:
         return MACRO(T(COMM), D(RCTL), T(X), U(RCTL), END);
-      case GPMD_PREV:
-        return MACRO(D(RCTL), D(LALT), D(LSFT), T(1), U(LSFT), U(LALT), U(RCTL), END);
-      case GPMD_NEXT:
-        return MACRO(D(RCTL), D(LALT), D(LSFT), T(2), U(LSFT), U(LALT), U(RCTL), END);
-      case GPMD_PAUSE:
-        return MACRO(D(RCTL), D(LALT), D(LSFT), T(3), U(LSFT), U(LALT), U(RCTL), END);
-      case GPMD_UP:
-        return MACRO(D(RCTL), D(LALT), D(LSFT), T(4), U(LSFT), U(LALT), U(RCTL), END);
-      case GPMD_DOWN:
-        return MACRO(D(RCTL), D(LALT), D(LSFT), T(5), U(LSFT), U(LALT), U(RCTL), END);
       case PASTE:
         if (osx_mode) {
           return MACRO(D(LGUI), T(V), U(LGUI), END);
@@ -281,37 +276,3 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   }
   return MACRO_NONE;
 };
-
-enum function_id {
-    SHIFT_ESC,
-};
-
-const uint16_t PROGMEM fn_actions[] = {
-  [0]  = ACTION_FUNCTION(SHIFT_ESC),
-};
-
-void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
-  static uint8_t shift_esc_shift_mask;
-  switch (id) {
-    case SHIFT_ESC:
-      shift_esc_shift_mask = get_mods()&MODS_CTRL_MASK;
-      if (record->event.pressed) {
-        if (shift_esc_shift_mask) {
-          add_key(KC_GRV);
-          send_keyboard_report();
-        } else {
-          add_key(KC_ESC);
-          send_keyboard_report();
-        }
-      } else {
-        if (shift_esc_shift_mask) {
-          del_key(KC_GRV);
-          send_keyboard_report();
-        } else {
-          del_key(KC_ESC);
-          send_keyboard_report();
-        }
-      }
-      break;
-  }
-}
