@@ -14,9 +14,13 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   ADJUST,
-  QSP,  // swap space and enter
+  QSP,    // swap space and enter
   TOGOSX,
   PASTE,
+  TSYNC,  // tmux synchronize panes
+  TPIPE,  // tmux pipe pane to log
+  TPRV,   // tmux previous session
+  TNXT,   // tmux next session
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -26,18 +30,6 @@ enum custom_keycodes {
 #define MC_LSPC LT(LFN_LAYER, KC_SPC)
 #define MC_RSPC LT(RFN_LAYER, KC_SPC)
 #define MC_NOG RALT(KC_LCTL)
-
-#define TSYNC 0          // tmux synchronize panes
-#define TPIPE 1          // tmux pipe pane to log
-#define TPRV 2           // tmux previous session
-#define TNXT 3           // tmux next session
-#define MSIL 4           // konsole monitor for silence
-#define MACT 5           // konsole monitor for activity
-#define UBIS 6           // ubisoft shift-f2 (meh)
-#define LCB 7            // <leader><C-b>
-#define LCX 8            // <leader><C-x>
-#define PASTE 14         // configurable paste
-#define TOGOSX 15        // toggle paste keys
 
 // Defines for task manager and such
 #define CALTDEL LCTL(LALT(KC_DEL))
@@ -133,9 +125,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     M(MSIL), M(MACT), KC_F12,  KC_F11,  KC_F10,  OBS_REC,                            RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, _______, TOGOSX,
+     _______, _______, KC_F12,  KC_F11,  KC_F10,  OBS_REC,                            RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, _______, TOGOSX,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     M(TPIPE),M(TSYNC), KC_F9,   KC_F8,   KC_F7,  OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF,  OBS_QT, CALTDEL,
+     TPIPE,   TSYNC,   KC_F9,   KC_F8,   KC_F7,   OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF,  OBS_QT, CALTDEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, QWERTY,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                             NOG_LT,  _______, _______,  NOG_RT, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -184,16 +176,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_ADJUST);
       }
       return false;
-      break;
     case PASTE:
-      if (osx_mode) {
-        SEND_STRING(SS_LGUI("v"))
-      } else {
-        SEND_STRING(SS_LSFT(X_INS))
+      if (record->event.pressed) {
+        if (osx_mode) {
+          SEND_STRING(SS_LGUI("v"));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_INS)SS_UP(X_LSFT));
+        }
       }
-      break;
+      return false;
     case TOGOSX:
-      osx_mode = !osx_mode;
+      if (record->event.pressed) {
+        osx_mode = !osx_mode;
+      }
+      return false;
+    case TSYNC:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LCTRL("s"));
+      }
+      return false;
+    case TPIPE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LSFT("p"));
+      }
+      return false;
+    case TPRV:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LSFT("9"));
+      }
+      return false;
+    case TNXT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LSFT("0"));
+      }
       return false;
   }
   return true;
@@ -250,29 +265,3 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
     return false;
 }
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
-  if (record->event.pressed) {
-    switch(id) {
-      case TSYNC:
-        return MACRO(D(RCTL), T(A), U(RCTL), D(RCTL), T(S), U(RCTL), END);
-      case TPIPE:
-        return MACRO(D(RCTL), T(A), U(RCTL), D(LSFT), T(P), U(LSFT), END);
-      case TPRV:
-        return MACRO(D(RCTL), T(A), U(RCTL), D(LSFT), T(9), U(LSFT), END);
-      case TNXT:
-        return MACRO(D(RCTL), T(A), U(RCTL), D(LSFT), T(0), U(LSFT), END);
-      case MSIL:
-        return MACRO(D(RCTL), D(LSFT), T(I), U(LSFT), U(RCTL), END);
-      case MACT:
-        return MACRO(D(RCTL), D(LSFT), T(A), U(LSFT), U(RCTL), END);
-      case UBIS:
-        return MACRO(D(LSFT), T(F2), U(LSFT), END);
-      case LCB:
-        return MACRO(T(COMM), D(RCTL), T(B), U(RCTL), END);
-      case LCX:
-        return MACRO(T(COMM), D(RCTL), T(X), U(RCTL), END);
-    }
-  }
-  return MACRO_NONE;
-};
