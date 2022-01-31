@@ -14,7 +14,9 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   ADJUST,
-  QWERTY_SPACE_SWAP,
+  QSP,  // swap space and enter
+  TOGOSX,
+  PASTE,
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -107,9 +109,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LALT, _______, KC_LCBR, KC_RCBR, KC_PGDN, KC_PGUP,                            KC_COMM, KC_7,    KC_8,    KC_9,    KC_PLUS, KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼──────┼  ───────  ────────┼────────┼────────┤
-     _______, _______, KC_LPRN, KC_RPRN, KC_EQL,  M(PASTE),                           KC_DOT,  KC_4,    KC_5,    KC_6,    KC_MINS,  KC_ENT,
+     _______, _______, KC_LPRN, KC_RPRN, KC_EQL,  PASTE,                              KC_DOT,  KC_4,    KC_5,    KC_6,    KC_MINS,  KC_ENT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼──────┼  ───────  ────────┼────────┼────────┤
-     _______, _______, KC_LBRC, KC_RBRC, _______, _______, KC_LPRN,          KC_RPRN, KC_0,    KC_1,    KC_2,    KC_3,    KC_SLSH, _______,
+     _______, _______, KC_LBRC, KC_RBRC, _______, _______, _______,          _______, KC_0,    KC_1,    KC_2,    KC_3,    KC_SLSH, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______,  KC_SPC,                   KC_0,    _______, KC_DOT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -131,13 +133,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     M(MSIL), M(MACT), KC_F12,  KC_F11,  KC_F10,  OBS_REC,                            RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, _______,M(TOGOSX),
+     M(MSIL), M(MACT), KC_F12,  KC_F11,  KC_F10,  OBS_REC,                            RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, _______, TOGOSX,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     M(TPIPE),M(TSYNC), KC_F9,   KC_F8,   KC_F7,  OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF,  OBS_QT,  CALTDEL,
+     M(TPIPE),M(TSYNC), KC_F9,   KC_F8,   KC_F7,  OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF,  OBS_QT, CALTDEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, QWERTY,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                            NOG_LT,  _______, _______,  NOG_RT, _______, _______,
+     _______, QWERTY,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                             NOG_LT,  _______, _______,  NOG_RT, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, QWERTY_SPACE_SWAP,  KC_F3,   KC_F2,   KC_F1, MEH(KC_F1),LCA(KC_DEL),      RESET,  BL_BRTG,  BL_DEC, BL_INC,  BL_TOGG, _______, _______,
+     _______, QSP,     KC_F3,   KC_F2,   KC_F1, MEH(KC_F1),LCA(KC_DEL),      RESET,   BL_BRTG, BL_DEC,  BL_INC,  BL_TOGG, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______,  _______,  _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -152,12 +154,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case QWERTY_SPACE_SWAP:
+    case QSP:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_QWERTY_SPACE_SWAP);
       }
       return false;
-      break;
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
@@ -167,7 +168,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
-      break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
@@ -177,7 +177,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
-      break;
     case ADJUST:
       if (record->event.pressed) {
         layer_on(_ADJUST);
@@ -186,6 +185,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case PASTE:
+      if (osx_mode) {
+        SEND_STRING(SS_LGUI("v"))
+      } else {
+        SEND_STRING(SS_LSFT(X_INS))
+      }
+      break;
+    case TOGOSX:
+      osx_mode = !osx_mode;
+      return false;
   }
   return true;
 }
@@ -263,15 +272,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         return MACRO(T(COMM), D(RCTL), T(B), U(RCTL), END);
       case LCX:
         return MACRO(T(COMM), D(RCTL), T(X), U(RCTL), END);
-      case PASTE:
-        if (osx_mode) {
-          return MACRO(D(LGUI), T(V), U(LGUI), END);
-        } else {
-          return MACRO(D(LSFT), T(INS), U(LSFT), END);
-        }
-      case TOGOSX:
-        osx_mode = !osx_mode;
-        return MACRO_NONE;
     }
   }
   return MACRO_NONE;
