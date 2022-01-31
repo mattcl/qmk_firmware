@@ -21,6 +21,9 @@ enum custom_keycodes {
   TPIPE,  // tmux pipe pane to log
   TPRV,   // tmux previous session
   TNXT,   // tmux next session
+  QLCC,   // qwerty layer color cycle
+  LLCC,   // lower layer color cycle
+  RLCC,   // raise layer color cycle
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -64,6 +67,19 @@ enum custom_keycodes {
 
 
 static bool osx_mode = false;
+
+// Synthwave
+enum synthwave {
+  MAGENTA,
+  TEAL,
+  GREEN,
+};
+
+const int SYNTHWAVE_NUM_COLORS = 3;
+
+static int qwerty_color = 0;
+static int lower_color = 1;
+static int raise_color = 2;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -127,7 +143,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, _______, KC_F12,  KC_F11,  KC_F10,  OBS_REC,                            RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, _______, TOGOSX,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     TPIPE,   TSYNC,   KC_F9,   KC_F8,   KC_F7,   OBS_PSE,                            OBS_SM,  OBS_SHT, OBS_CAM,  OBS_QF,  OBS_QT, CALTDEL,
+     TPIPE,   TSYNC,   KC_F9,   KC_F8,   KC_F7,   OBS_PSE,                            _______, QLCC,    LLCC,    RLCC,    _______, CALTDEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, QWERTY,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                             NOG_LT,  _______, _______,  NOG_RT, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -210,39 +226,62 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LSFT("0"));
       }
       return false;
+    case QLCC:
+      if (record->event.pressed) {
+        qwerty_color = (qwerty_color + 1) % SYNTHWAVE_NUM_COLORS;
+      }
+      return false;
+    case LLCC:
+      if (record->event.pressed) {
+        lower_color = (lower_color + 1) % SYNTHWAVE_NUM_COLORS;
+      }
+      return false;
+    case RLCC:
+      if (record->event.pressed) {
+        raise_color = (raise_color + 1) % SYNTHWAVE_NUM_COLORS;
+      }
+      return false;
   }
   return true;
 }
 
 uint32_t default_layer_state_set_user(uint32_t state) {
-  // rev 4
-  // rgblight_sethsv(HSV_MAGENTA);
-  rgb_matrix_sethsv(HSV_PURPLE);
+  rgb_matrix_sethsv(HSV_MAGENTA);
   rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS);
   return state;
+}
+
+void set_layer_color(int index) {
+  switch(index) {
+  case TEAL:
+    rgb_matrix_sethsv_noeeprom(HSV_TEAL);
+    break;
+  case MAGENTA:
+    rgb_matrix_sethsv_noeeprom(HSV_MAGENTA);
+    break;
+  case GREEN:
+    rgb_matrix_sethsv_noeeprom(HSV_GREEN);
+    break;
+  }
 }
 
 uint32_t layer_state_set_user(uint32_t state) {
     uint8_t layer = biton32(state);
     switch(layer) {
     case _QWERTY:
-        rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+        set_layer_color(qwerty_color);
         rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS);
-        // rgblight_mode_noeeprom(7);
         break;
     case _LOWER:
-        rgb_matrix_sethsv_noeeprom(HSV_BLUE);
+        set_layer_color(lower_color);
         rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_SPLASH);
-        // rgblight_mode_noeeprom(RGBLIGHT_EFFECT_RAINBOW_SWIRL + 5);
         break;
     case _RAISE:
-        rgb_matrix_sethsv_noeeprom(HSV_GREEN);
+        set_layer_color(raise_color);
         rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_SPLASH);
-        // rgblight_mode_noeeprom(RGBLIGHT_EFFECT_SNAKE + 3);
         break;
     case _ADJUST:
         rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN);
-        // rgblight_mode_noeeprom(22);
         break;
     }
     return state;
