@@ -281,9 +281,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case REACT_CAM:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTRL(SS_LSFT(SS_LALT(SS_TAP(X_F11)))));
+                SEND_STRING(SS_LCTRL(SS_LSFT(SS_LALT(SS_DOWN(X_F11) SS_DELAY(100) SS_UP(X_F11)))));
             } else {
-                SEND_STRING(SS_LCTRL(SS_LSFT(SS_LALT(SS_TAP(X_F11)))));
+                SEND_STRING(SS_LCTRL(SS_LSFT(SS_LALT(SS_DOWN(X_F11) SS_DELAY(100) SS_UP(X_F11)))));
             }
 
             if (led >= 0 && led <= 11) {
