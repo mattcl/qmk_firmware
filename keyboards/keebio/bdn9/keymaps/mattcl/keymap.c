@@ -29,7 +29,7 @@ static int cur_desired_layer = 0;
 enum layers {
     _OBS_ONE,
     _OBS_TWO,
-    _HANGOUTS,
+    _GOOGLE_MEET,
     _ADJUST
 };
 
@@ -62,10 +62,10 @@ static uint8_t light_color[11][3] = {
     {RGB_PURPLE},
     {RGB_PURPLE},
     {RGB_PURPLE},
+    {RGB_GREEN},
     {RGB_PURPLE},
     {RGB_PURPLE},
-    {RGB_PURPLE},
-    {RGB_PURPLE},
+    {RGB_GREEN},
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -93,15 +93,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     /*
-        | Knob 1: Next/prev layer |                       | Knob 2: Vol up/down       |
-        | Press: reset to L0      | Hangouts toggle video | Press: Mute               |
-        | N/A                     | N/A                   | N/A                       |
-        | Hangouts mute           | N/A                   | Hangouts raise/lower hand |
+        | Knob 1: Next/prev layer |                   | Knob 2: Increase/Decrease participants |
+        | Press: reset to L0      | Meet toggle video | Press: Mute                            |
+        | N/A                     | N/A               | N/A                                    |
+        | Meet mute               | Meet toggle chat  | Meet raise/lower hand                  |
      */
-    [_HANGOUTS] = LAYOUT(
+    [_GOOGLE_MEET] = LAYOUT(
         RST_BASE_LR, LCTL(KC_E), KC_MUTE,
         KC_NO,       KC_NO,      KC_NO,
-        LCTL(KC_D), KC_NO,      LCA(KC_H)
+        LCTL(KC_D),  LCA(KC_C),  LCA(KC_H)
     ),
 
     /*
@@ -175,7 +175,7 @@ void process_lighting_changes(uint8_t led, bool pressed) {
 
         // the hangouts layer only has 3 active keys that we need to worry
         // about, and they're all toggles
-        case _HANGOUTS:
+        case _GOOGLE_MEET:
             if (pressed && (led == 1 || led == 6 || led == 8)) {
                 light_enabled[led] = !light_enabled[led];
             }
@@ -233,6 +233,10 @@ void set_layer_coloring(uint8_t layer) {
             }
             // recording key is red
             set_light_map_color(1, RGB_RED);
+
+            // transition and reaction keys are green
+            set_light_map_color(5, RGB_GREEN);
+            set_light_map_color(8, RGB_GREEN);
             break;
         case _OBS_TWO:
             for (int i = 0; i < 11; i++) {
@@ -240,11 +244,19 @@ void set_layer_coloring(uint8_t layer) {
             }
             // recording key is red
             set_light_map_color(1, RGB_RED);
+
+            // transition and reaction keys are green
+            set_light_map_color(5, RGB_GREEN);
+            set_light_map_color(8, RGB_GREEN);
             break;
-        case _HANGOUTS:
+        case _GOOGLE_MEET:
             for (int i = 0; i < 11; i++) {
                 set_light_map_color(i, RGB_GREEN);
             }
+
+            // mute/video buttons are red
+            set_light_map_color(1, RGB_RED);
+            set_light_map_color(6, RGB_RED);
             break;
         case _ADJUST:
             for (int i = 0; i < 11; i++) {
@@ -265,14 +277,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         case REACT_CAM:
+            // handle lighting changes first, since we have a delay in the macro
+            if (led >= 0 && led <= 11) {
+                process_lighting_changes(led, record->event.pressed);
+            }
+
             if (record->event.pressed) {
                 SEND_STRING(SS_LCTRL(SS_LSFT(SS_LALT(SS_DOWN(X_F11) SS_DELAY(100) SS_UP(X_F11)))));
             } else {
                 SEND_STRING(SS_LCTRL(SS_LSFT(SS_LALT(SS_DOWN(X_F11) SS_DELAY(100) SS_UP(X_F11)))));
-            }
-
-            if (led >= 0 && led <= 11) {
-                process_lighting_changes(led, record->event.pressed);
             }
             return false;
         default:
@@ -300,10 +313,21 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == _RIGHT) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
+        switch (cur_desired_layer) {
+            case _GOOGLE_MEET:
+                // increase/decrease number of participants
+                if (clockwise) {
+                    SEND_STRING(SS_LCTRL(SS_LALT("k")));
+                } else {
+                    SEND_STRING(SS_LCTRL(SS_LALT("j")));
+                }
+                return true;
+            default:
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
         }
     }
     return true;
