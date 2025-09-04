@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
+     QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY_SPACE_SWAP] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
+     QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -147,7 +147,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, QWERTY,  KC_F6,   KC_F5,   KC_F4,  OBS_STR,                             NOG_LT,  _______, _______,  NOG_RT, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, QSP,     KC_F3,   KC_F2,   KC_F1, MEH(KC_F1),LCA(KC_DEL),      RESET,   BL_BRTG, BL_DEC,  BL_INC,  BL_TOGG, _______, _______,
+     _______, QSP,     KC_F3,   KC_F2,   KC_F1, MEH(KC_F1),LCA(KC_DEL),      RESET,   BL_BRTG, BL_DOWN,  BL_UP,  BL_TOGG, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______,  _______,  _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -208,22 +208,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case TSYNC:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LCTRL("s"));
+        SEND_STRING(SS_LCTL("a") SS_DELAY(50) SS_LCTL("s"));
       }
       return false;
     case TPIPE:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LSFT("p"));
+        SEND_STRING(SS_LCTL("a") SS_DELAY(50) SS_LSFT("p"));
       }
       return false;
     case TPRV:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LSFT("9"));
+        SEND_STRING(SS_LCTL("a") SS_DELAY(50) SS_LSFT("9"));
       }
       return false;
     case TNXT:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTRL("a") SS_DELAY(50) SS_LSFT("0"));
+        SEND_STRING(SS_LCTL("a") SS_DELAY(50) SS_LSFT("0"));
       }
       return false;
     case QLCC:
@@ -245,7 +245,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-uint32_t default_layer_state_set_user(uint32_t state) {
+layer_state_t default_layer_state_set_user(layer_state_t state) {
   rgb_matrix_sethsv(HSV_MAGENTA);
   rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS);
   return state;
@@ -265,7 +265,7 @@ void set_layer_color(int index) {
   }
 }
 
-uint32_t layer_state_set_user(uint32_t state) {
+layer_state_t layer_state_set_user(layer_state_t state) {
     uint8_t layer = biton32(state);
     switch(layer) {
     case _QWERTY:
