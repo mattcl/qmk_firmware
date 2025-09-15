@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define USE_I2C
 #define EE_HANDS
 #undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 90
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP
@@ -33,6 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS
 #define SPLIT_TRANSPORT_MIRROR
+#define HOLD_ON_OTHER_KEY_PRESS
+#define TAPPING_TERM 200
 
 // rev 4 settings
 /* #undef RGBLED_NUM */
