@@ -1,3 +1,4 @@
 # rev 6
 # RGBLIGHT_ENABLE = yes
 CONSOLE_ENABLE = no
+COMBO_ENABLE = yes
