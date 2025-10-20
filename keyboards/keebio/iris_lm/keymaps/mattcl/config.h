@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPLIT_TRANSPORT_MIRROR
 #define HOLD_ON_OTHER_KEY_PRESS
 #define TAPPING_TERM 200
+#define COMBO_ONLY_FROM_LAYER 0
 
 // rev 4 settings
 /* #undef RGBLED_NUM */
