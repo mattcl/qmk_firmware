@@ -35,6 +35,7 @@ enum custom_keycodes {
   FN_RET, // ->
   YOU,    // you
   IM,     // I'm
+  QU,     // QU
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -98,17 +99,20 @@ static int raise_color = 2;
 enum combos {
     C_NUM,
     C_YOU,
-    C_IM
+    C_IM,
+    C_QU,
 };
 
 const uint16_t PROGMEM num_combo[] = {KC_W, KC_F, COMBO_END};
 const uint16_t PROGMEM you_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM im_combo[] = {KC_I, KC_M, COMBO_END};
+const uint16_t PROGMEM qu_combo[] = {KC_N, KC_U, COMBO_END};
 
 combo_t key_combos[] = {
     [C_NUM] = COMBO(num_combo, MO(_NUM)),
     [C_YOU] = COMBO(you_combo, YOU),
     [C_IM] = COMBO(im_combo, IM),
+    [C_QU] = COMBO(qu_combo, QU),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -117,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      // QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_MINS,  KC_BSPC,
      _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
+     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
 CTL_T(KC_ESC),KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                               KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -359,6 +363,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case IM:
       if (record->event.pressed) {
         SEND_STRING("I'm");
+      }
+      return false;
+    case QU:
+      if (record->event.pressed) {
+        SEND_STRING("qu");
       }
       return false;
   }

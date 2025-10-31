@@ -35,6 +35,7 @@ enum custom_keycodes {
   FN_RET, // ->
   YOU,    // you
   IM,     // I'm
+  QU,     // QU
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -93,23 +94,26 @@ static int raise_color = 2;
 enum combos {
     C_NUM,
     C_YOU,
-    C_IM
+    C_IM,
+    C_QU,
 };
 
 const uint16_t PROGMEM num_combo[] = {KC_W, KC_F, COMBO_END};
 const uint16_t PROGMEM you_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM im_combo[] = {KC_I, KC_M, COMBO_END};
+const uint16_t PROGMEM qu_combo[] = {KC_N, KC_U, COMBO_END};
 
 combo_t key_combos[] = {
     [C_NUM] = COMBO(num_combo, MO(_NUM)),
     [C_YOU] = COMBO(you_combo, YOU),
     [C_IM] = COMBO(im_combo, IM),
+    [C_QU] = COMBO(qu_combo, QU),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAK_DH] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
+     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
 CTL_T(KC_ESC),KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                               KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -145,7 +149,7 @@ CTL_T(KC_ESC),KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         
 
   [_LOWER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_TILD, KC_LABK, KC_LCBR, KC_RCBR, KC_RABK, KC_DLR,                             KC_ASTR, KC_GRV,  KC_AMPR, KC_PIPE, _______, KC_BSPC,
+     KC_TILD, KC_LABK, KC_LCBR, KC_RCBR, KC_RABK, KC_DLR,                             KC_ASTR, KC_GRV,  KC_AMPR, KC_PIPE, _______, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_EXLM, KC_LPRN, KC_RPRN, KC_EQL,  PASTE,                              KC_PERC, KC_MINS, KC_LBRC, KC_RBRC, KC_SCLN, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -337,6 +341,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case IM:
       if (record->event.pressed) {
         SEND_STRING("I'm");
+      }
+      return false;
+    case QU:
+      if (record->event.pressed) {
+        SEND_STRING("qu");
       }
       return false;
   }
