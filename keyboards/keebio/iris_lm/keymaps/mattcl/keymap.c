@@ -36,6 +36,7 @@ enum custom_keycodes {
   YOU,    // you
   IM,     // I'm
   QU,     // QU
+  JO,     // JO
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -101,18 +102,24 @@ enum combos {
     C_YOU,
     C_IM,
     C_QU,
+    C_JO,
+    C_ESC,
 };
 
 const uint16_t PROGMEM num_combo[] = {KC_W, KC_F, COMBO_END};
 const uint16_t PROGMEM you_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM im_combo[] = {KC_I, KC_M, COMBO_END};
 const uint16_t PROGMEM qu_combo[] = {KC_N, KC_U, COMBO_END};
+const uint16_t PROGMEM jo_combo[] = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM esc_combo[] = {KC_F, KC_T, COMBO_END};
 
 combo_t key_combos[] = {
     [C_NUM] = COMBO(num_combo, MO(_NUM)),
     [C_YOU] = COMBO(you_combo, YOU),
     [C_IM] = COMBO(im_combo, IM),
     [C_QU] = COMBO(qu_combo, QU),
+    [C_JO] = COMBO(jo_combo, JO),
+    [C_ESC] = COMBO(esc_combo, KC_ESC),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -368,6 +375,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case QU:
       if (record->event.pressed) {
         SEND_STRING("qu");
+      }
+      return false;
+    case JO:
+      if (record->event.pressed) {
+        SEND_STRING("jo");
       }
       return false;
   }
