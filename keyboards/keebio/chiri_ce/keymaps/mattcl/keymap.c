@@ -98,7 +98,8 @@ enum combos {
     C_IM,
     C_QU,
     C_JO,
-    C_ESC,
+    C_LGUI,
+    C_RGUI,
 };
 
 const uint16_t PROGMEM num_combo[] = {KC_W, KC_F, COMBO_END};
@@ -106,7 +107,8 @@ const uint16_t PROGMEM you_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM im_combo[] = {KC_I, KC_M, COMBO_END};
 const uint16_t PROGMEM qu_combo[] = {KC_N, KC_U, COMBO_END};
 const uint16_t PROGMEM jo_combo[] = {KC_J, KC_L, COMBO_END};
-const uint16_t PROGMEM esc_combo[] = {KC_F, KC_T, COMBO_END};
+const uint16_t PROGMEM lgui_combo[] = {KC_R, KC_F, COMBO_END};
+const uint16_t PROGMEM rgui_combo[] = {KC_U, KC_I, COMBO_END};
 
 combo_t key_combos[] = {
     [C_NUM] = COMBO(num_combo, MO(_NUM)),
@@ -114,7 +116,8 @@ combo_t key_combos[] = {
     [C_IM] = COMBO(im_combo, IM),
     [C_QU] = COMBO(qu_combo, QU),
     [C_JO] = COMBO(jo_combo, JO),
-    [C_ESC] = COMBO(esc_combo, KC_ESC),
+    [C_LGUI] = COMBO(lgui_combo, KC_LGUI),
+    [C_RGUI] = COMBO(rgui_combo, KC_RGUI),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
