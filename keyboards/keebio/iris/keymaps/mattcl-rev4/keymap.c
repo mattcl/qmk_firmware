@@ -37,6 +37,7 @@ enum custom_keycodes {
   IM,     // I'm
   QU,     // QU
   JO,     // JO
+  PUB,    // PUB
 };
 
 #define MC_TAB GUI_T(KC_TAB)
@@ -103,6 +104,7 @@ enum combos {
     C_IM,
     C_QU,
     C_JO,
+    C_PUB,
     C_LGUI,
     C_RGUI,
 };
@@ -112,6 +114,7 @@ const uint16_t PROGMEM you_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM im_combo[] = {KC_I, KC_M, COMBO_END};
 const uint16_t PROGMEM qu_combo[] = {KC_N, KC_U, COMBO_END};
 const uint16_t PROGMEM jo_combo[] = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM pub_combo[] = {KC_F, KC_P, COMBO_END};
 const uint16_t PROGMEM lgui_combo[] = {KC_R, KC_F, COMBO_END};
 const uint16_t PROGMEM rgui_combo[] = {KC_U, KC_I, COMBO_END};
 
@@ -121,6 +124,7 @@ combo_t key_combos[] = {
     [C_IM] = COMBO(im_combo, IM),
     [C_QU] = COMBO(qu_combo, QU),
     [C_JO] = COMBO(jo_combo, JO),
+    [C_PUB] = COMBO(pub_combo, PUB),
     [C_LGUI] = COMBO(lgui_combo, KC_LGUI),
     [C_RGUI] = COMBO(rgui_combo, KC_RGUI),
 };
@@ -192,11 +196,11 @@ CTL_T(KC_ESC),KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         
      // KC_GRV,  KC_0,    KC_9,    KC_8,    KC_7,    KC_6,                               _______, _______, KC_SLSH, KC_ASTR, KC_MINS, KC_EQL,
      _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            KC_GRV,  KC_7,    KC_8,    KC_9,    _______, KC_BSPC,
+     _______, _______, _______, _______, _______, _______,                            KC_GRV,  KC_4,    KC_5,    KC_6,    _______, KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, KC_LGUI, _______, _______, KC_DOT,  _______,                            KC_MINS, KC_4,    KC_5,    KC_6,    KC_UNDS, _______,
+     _______, KC_LGUI, _______, _______, KC_DOT,  _______,                            KC_MINS, KC_1,    KC_2,    KC_3,    KC_UNDS, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______, _______,          _______, KC_DOT,  KC_1,    KC_2,    KC_3,    _______, _______,
+     _______, _______, _______, _______, _______, _______, _______,          _______, KC_DOT,  KC_7,    KC_8,    KC_9,    _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, KC_LSFT, KC_LGUI,                   KC_0,    _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -387,6 +391,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case JO:
       if (record->event.pressed) {
         SEND_STRING("jo");
+      }
+      return false;
+    case PUB:
+      if (record->event.pressed) {
+        SEND_STRING("pub");
       }
       return false;
   }
