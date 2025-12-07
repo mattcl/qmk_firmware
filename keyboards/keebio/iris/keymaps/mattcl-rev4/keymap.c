@@ -99,7 +99,7 @@ static int lower_color = 1;
 static int raise_color = 2;
 
 enum combos {
-    // C_NUM,
+    C_ESC,
     C_YOU,
     C_IM,
     C_QU,
@@ -109,7 +109,7 @@ enum combos {
     C_RGUI,
 };
 
-// const uint16_t PROGMEM num_combo[] = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM esc_combo[] = {KC_W, KC_F, COMBO_END};
 const uint16_t PROGMEM you_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM im_combo[] = {KC_I, KC_M, COMBO_END};
 const uint16_t PROGMEM qu_combo[] = {KC_N, KC_U, COMBO_END};
@@ -119,7 +119,7 @@ const uint16_t PROGMEM lgui_combo[] = {KC_R, KC_F, COMBO_END};
 const uint16_t PROGMEM rgui_combo[] = {KC_U, KC_I, COMBO_END};
 
 combo_t key_combos[] = {
-    // [C_NUM] = COMBO(num_combo, MO(_NUM)),
+    [C_ESC] = COMBO(esc_combo, KC_ESC),
     [C_YOU] = COMBO(you_combo, YOU),
     [C_IM] = COMBO(im_combo, IM),
     [C_QU] = COMBO(qu_combo, QU),

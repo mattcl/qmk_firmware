@@ -94,7 +94,7 @@ static int lower_color = 1;
 static int raise_color = 2;
 
 enum combos {
-    // C_NUM,
+    C_ESC,
     C_YOU,
     C_IM,
     C_QU,
@@ -104,7 +104,7 @@ enum combos {
     C_RGUI,
 };
 
-// const uint16_t PROGMEM num_combo[] = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM esc_combo[] = {KC_W, KC_F, COMBO_END};
 const uint16_t PROGMEM you_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM im_combo[] = {KC_I, KC_M, COMBO_END};
 const uint16_t PROGMEM qu_combo[] = {KC_N, KC_U, COMBO_END};
@@ -114,7 +114,7 @@ const uint16_t PROGMEM lgui_combo[] = {KC_R, KC_F, COMBO_END};
 const uint16_t PROGMEM rgui_combo[] = {KC_U, KC_I, COMBO_END};
 
 combo_t key_combos[] = {
-    // [C_NUM] = COMBO(num_combo, MO(_NUM)),
+    [C_ESC] = COMBO(esc_combo, KC_ESC),
     [C_YOU] = COMBO(you_combo, YOU),
     [C_IM] = COMBO(im_combo, IM),
     [C_QU] = COMBO(qu_combo, QU),
@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-CTL_T(KC_ESC),KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                               KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+     KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                               KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_MUTE,          KC_DEL,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
